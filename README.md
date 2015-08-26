@@ -61,4 +61,14 @@ This works as long as you have the `rerun` formatter enabled.
 For example a JUnit formatter:
 
     -Dcucumber.options="--plugin junit:target/cucumber-junit-report.xml"
+    
+## Look at the report
+    
+You can check the cucumber html report on the path:
+
+`${PARENT_FOLDER}/cucumber-poc-coverage/target/html/index.html`
+
+It has to look something like this:
+
+![alt text](cucumberReport.png "Cucumber report")
 
