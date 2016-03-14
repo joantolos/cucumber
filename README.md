@@ -1,72 +1,59 @@
 # Cucumber POC
 
-## Use Maven
+## About Cucumber
 
-Open a command window and run:
+Cucumber is a software tool for testing other software. It runs automated acceptance tests written in a behavior-driven development (BDD) style. 
+It is written in the Ruby programming language but it has implementation for a lot of languages, including Java. Cucumber allows the 
+execution of feature documentation written in business-facing text.
 
-    mvn test
+For more information:
 
-This runs Cucumber features using Cucumber's JUnit runner. The `@RunWith(Cucumber.class)` annotation on the `RunCukesTest`
-class tells JUnit to kick off Cucumber.
+[Cucumber official web page](https://cucumber.io/)
 
-## Overriding options
+## The three steps to get started
 
-The Cucumber runtime parses command line options to know what features to run, where the glue code lives, what plugins to use etc.
-When you use the JUnit runner, these options are generated from the `@CucumberOptions` annotation on your test.
+You need at least three steps to start working with cucumber:
 
-Sometimes it can be useful to override these options without changing or recompiling the JUnit class. This can be done with the
-`cucumber.options` system property. The general form is:
+* The behavior definition
+* The feature definition
+* The steps definition
 
-Using Maven:
+### Behavior
 
-    mvn -Dcucumber.options="..." test
+You need to define a behavior class (Which name has to end with "Test") where you can define the report location, the features files location, the step definition location and which features you want to test. You can configure a lot of things here, take a look at the Cucumber documentation for more details.
 
-Let's look at some things you can do with `cucumber.options`. Try this:
+![alt text](behavior.png "Behavior class example")
 
-    -Dcucumber.options="--help"
+### Features: Gherkin language
+Cucumber executes your .feature files, and those files contain executable specifications written in a language called Gherkin.
 
-That should list all the available options.
+Gherkin is plain-text English (or one of 60+ other languages) with a little extra structure. Gherkin is designed to be easy to learn by non-programmers, yet structured enough to allow concise description of examples to illustrate business rules in most real-world domains.
 
-*IMPORTANT*
+Here is a sample Gherkin document:
 
-When you override options with `-Dcucumber.options`, you will completely override whatever options are hard-coded in
-your `@CucumberOptions` or in the script calling `cucumber.api.cli.Main`. There is one exception to this rule, and that
-is the `--plugin` option. This will not _override_, but _add_ a plugin. The reason for this is to make it easier
-for 3rd party tools (such as [Cucumber Pro](https://cucumber.pro/)) to automatically configure additional plugins by appending arguments to a `cucumber.properties`
-file.
+![alt text](gherkin.png "Gherking example")
 
-### Run a subset of Features or Scenarios
+In Gherkin, each line that isn't blank has to start with a Gherkin keyword, followed by any text you like.
 
-Specify a particular scenario by *line* (and use the pretty plugin, which prints the scenario back)
+### Steps
 
-    -Dcucumber.options="classpath:authentication/belly.feature:4 --plugin pretty"
+Once defined the feature, you have to implement the concrete steps to execute for each feature. If you skip that step, you can use maven snippets as an skeleton of your steps definition. Just compile the code and look at the maven outcome on console. It contains suggestions of how the steps should be.
 
-This works because Maven puts `./src/test/resources` on your `classpath`.
-You can also specify files to run by filesystem path:
+![alt text](steps.png "Steps example")
 
-    -Dcucumber.options="src/test/resources/authentication/belly.feature:4 --plugin pretty"
+Here is where you will be doing the asserts and checking the code.
 
-You can also specify what to run by *tag*:
+## Use Maven to execute the test
 
-    -Dcucumber.options="--tags @bar --plugin pretty"
+On the parent folder of the project type:
 
-### Running only the scenarios that failed in the previous run
-
-    -Dcucumber.options="@target/rerun.txt"
-
-This works as long as you have the `rerun` formatter enabled.
-
-### Specify a different formatter:
-
-For example a JUnit formatter:
-
-    -Dcucumber.options="--plugin junit:target/cucumber-junit-report.xml"
+`mvn clean compile`
     
 ## Look at the report
     
 You can check the cucumber html report on the path:
 
-`${PARENT_FOLDER}/cucumber-poc-coverage/target/html/index.html`
+`${PARENT_FOLDER}/cucumber-poc-acceptance/target/html/index.html`
 
 It has to look something like this:
 
