@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.joan.tolos.cucumber</groupId>
-    <artifactId>cucumber-poc</artifactId>
+    <artifactId>cucumber</artifactId>
     <version>15.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
